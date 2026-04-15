@@ -132,46 +132,146 @@ Ready to publish
 
 ## Building a Knowledge Base (Multiple Articles)
 
-**This is where efficiency compounds.**
+**This is where efficiency compounds through BRAND-WIDE + COMMON KB.**
+
+### Brand KB (Persistent, Accumulates Across All Articles)
+```
+client_acmeecommerce/
+├── meta/ (ONCE - reused for all articles)
+│   ├── brand_voice.json (tone, vocabulary)
+│   ├── positioning.json (UVP, messaging)
+│   ├── target_audience.json (who we're talking to)
+│   └── guidelines.json (what we can/can't say)
+│
+├── research/ (ACCUMULATING - never thrown away)
+│   ├── sources.json (all 19 sources, deduplicated)
+│   ├── claims.json (verified claims we can reuse)
+│   ├── statistics.json (metrics with dates)
+│   └── industry_trends.json (what's happening in e-commerce)
+│
+├── expertise/ (BRAND KNOWLEDGE)
+│   ├── case_studies.json (Acme's own data)
+│   └── methodologies.json (how Acme does personalization)
+│
+└── performance/
+    ├── articles.json (all 5 articles we've written)
+    └── keyword_rankings.json (what's ranking)
+```
+
+### Common KB (Shared Across ALL Clients)
+```
+common_kb/
+├── humanization/ (Reusable patterns for any brand)
+│   ├── sentence_structures.json (short→medium→long→fragment)
+│   ├── personal_voice_markers.json (I-statements, opinions)
+│   └── expertise_signals.json (what proves you know the topic)
+│
+├── fact_checking/ (Universal methodologies)
+│   ├── credible_sources.json (ranked by reliability)
+│   ├── hallucination_patterns.json (common false claims)
+│   └── contradiction_resolution.json (how to handle conflicts)
+│
+├── plagiarism_prevention/ (Techniques that work for all)
+│   ├── restructuring_patterns.json (rewriting without copying)
+│   └── semantic_variation.json (alternative word choices)
+│
+└── industry_knowledge/ (General trends)
+    ├── seo_guidelines.json (Google's ranking signals)
+    ├── aeo_best_practices.json (AI extraction)
+    └── tech_trends.json (emerging technologies)
+```
 
 ### Article 1: "AI Personalization Basics"
 ```
 Phase 1: Research from scratch
-  └─ Gather 12 authoritative sources
-  └─ Extract claims, statistics, contradictions
-  └─ Store in KB: client_brand/research/personalization/
-  └─ Token cost: ~500 tokens for research
+  └─ Load brand meta (voice, positioning) - 150 tokens
+  └─ Load common KB patterns (humanization, fact-checking) - 100 tokens
+  └─ Gather 12 sources specific to personalization - 400 tokens
+  └─ Store in brand KB for reuse - (stored, not in memory)
+  └─ Token cost: ~650 tokens
 
-Total effort: Full process, all phases
+Total cost: Full process
 ```
 
 ### Article 2: "Advanced Personalization"
 ```
-Phase 1: Build on Article 1's KB
-  └─ Reuse 10 sources from Article 1 (don't re-fetch)
-  └─ Search for NEW sources only (~4 new ones)
-  └─ Merge with existing KB
-  └─ Token cost: ~100 tokens for research (80% savings!)
+Phase 1: Build on brand KB
+  └─ Brand meta + common patterns (cached) - 0 tokens
+  └─ Reuse 8 sources from Article 1 brand KB - 100 tokens
+  └─ Research 4 new sources for "advanced" angle - 200 tokens
+  └─ Store in brand KB
+  └─ Token cost: ~300 tokens (54% savings!)
 
-Result: Article 2 research is 80% faster than Article 1
+Result: Article 2 research costs HALF of Article 1
 ```
 
 ### Article 3: "Personalization Implementation"
 ```
-Phase 1: Leverage full KB
-  └─ Reuse 14 sources from Articles 1-2
-  └─ Add 2-3 implementation-specific sources
-  └─ Token cost: ~50 tokens for research (90% savings!)
+Phase 1: Leverage accumulated brand KB
+  └─ Meta + patterns (cached) - 0 tokens
+  └─ Reuse 12 sources from Articles 1-2 - 150 tokens
+  └─ Research 2 new implementation-specific sources - 80 tokens
+  └─ Store in brand KB
+  └─ Token cost: ~230 tokens (65% savings!)
 
-Result: Article 3 is even faster
+Result: Article 3 costs only 35% of Article 1
 ```
 
-### By Article 5:
+### Articles 4-5: Maximum Efficiency
 ```
-KB contains 19+ sources on personalization
-Research phase is 5-10 minutes
-Cost per article drops 80% from Article 1
-Quality improves (more comprehensive source coverage)
+Phase 1: Brand KB is comprehensive
+  └─ Meta + patterns (cached) - 0 tokens
+  └─ Reuse 14+ sources from brand KB - 100 tokens
+  └─ Research only gaps/updates - 50 tokens
+  └─ Store in brand KB
+  └─ Token cost: ~150 tokens (77% savings!)
+
+Result: By Article 5, each new article costs 23% of Article 1
+```
+
+### Compound Effect for 5-Article Series:
+```
+Article 1:  650 tokens
+Article 2:  300 tokens (46% of Article 1)
+Article 3:  230 tokens (35% of Article 1)
+Article 4:  200 tokens (31% of Article 1)
+Article 5:  150 tokens (23% of Article 1)
+
+Total for 5 articles: 1,530 tokens
+If each independent: 5 × 650 = 3,250 tokens
+
+SAVINGS: 53% across the series
+```
+
+### Brand KB Persists (Never Deleted)
+```
+After 5 articles on personalization, brand KB contains:
+- 18+ deduplicated sources (never thrown away)
+- 40+ verified claims tagged by topic
+- 25+ statistics with dates
+- Industry trends captured
+- Successful writing patterns documented
+
+Next article on personalization topic?
+→ Reuse 80%+ of research
+→ Research only the new angle
+→ Cost: 150-200 tokens
+```
+
+### Common KB Benefits All Clients
+```
+Client A (E-commerce):  Uses common humanization patterns
+Client B (SaaS):        Uses same fact-checking methodologies
+Client C (Finance):     Uses same schema patterns
+Client D (Healthcare):  Uses same plagiarism prevention logic
+
+All brands benefit from:
+- Proven humanization techniques (no client needs to reinvent)
+- Universal fact-checking standards
+- Shared industry trends (adapt to brand-specific)
+- Reusable schema patterns
+
+Result: Faster onboarding, consistent quality, compound learning
 ```
 
 ---

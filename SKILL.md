@@ -493,61 +493,161 @@ After publishing, update client KB:
 
 ---
 
-## Knowledge Base Architecture (Token-Efficient)
+## Knowledge Base Architecture (Brand-Wide + Shared Common KB)
 
-**Goal:** Reusable research that speeds up future articles.
+**Goal:** Brand-wide research + reusable common patterns across all clients.
 
-### Structure
+### Two-Tier Architecture
 
+**Tier 1: Brand-Wide Knowledge Base** (Per-client, persistent across all articles)
 ```
 client_{brand}/
-├── meta.json
-│   ├── brand_voice (tone + style rules)
-│   ├── positioning (UVP, differentiators)
-│   └── target_audience (psychographics + needs)
 │
-├── research/
-│   ├── {topic_1}/
-│   │   ├── sources.json (URL, date, credibility, claims)
-│   │   ├── claims.json (extractable facts with attribution)
-│   │   ├── statistics.json (all metrics with dates/sources)
-│   │   ├── contradictions.json (conflicting data)
-│   │   └── gaps.json (what's missing / needs more research)
-│   │
-│   ├── {topic_2}/
-│   └── ...
+├── meta/ (BRAND-LEVEL - shared by all articles)
+│   ├── brand_voice.json (tone, style, vocabulary, personality)
+│   ├── positioning.json (UVP, differentiators, core message)
+│   ├── target_audience.json (psychographics, pain points, decision drivers)
+│   └── content_guidelines.json (restrictions, approved topics, terminology)
 │
-├── expertise/
-│   ├── case_studies.json (user's own data/experience)
-│   ├── insider_knowledge.json (proprietary insights)
-│   └── lessons_learned.json (what works/doesn't)
+├── research/ (BRAND-LEVEL - accumulating across all topics)
+│   ├── sources.json (all sources ever used for this brand, deduplicated)
+│   ├── claims.json (all verified claims by category)
+│   ├── statistics.json (all metrics used, with dates and sources)
+│   ├── industry_trends.json (specific to brand's industry)
+│   └── competitor_insights.json (what competitors cover)
 │
-└── performance/
-    ├── successful_patterns.json (articles that ranked well)
-    ├── keyword_rankings.json (current position tracking)
-    └── gap_analysis.json (untapped opportunities)
+├── expertise/ (BRAND-SPECIFIC)
+│   ├── case_studies.json (brand's own data, examples, results)
+│   ├── methodologies.json (how brand does things differently)
+│   ├── proprietary_data.json (unique statistics/findings)
+│   └── lessons_learned.json (what works for this brand)
+│
+└── performance/ (BRAND-LEVEL TRACKING)
+    ├── articles.json (all articles written with metadata)
+    ├── keyword_rankings.json (current rankings across all topics)
+    ├── successful_patterns.json (what drives ranking/engagement)
+    └── gap_analysis.json (untapped keyword opportunities)
+```
+
+**Tier 2: Common Knowledge Base** (Shared across ALL clients, read-only)
+```
+common_kb/
+│
+├── humanization/ (REUSABLE PATTERNS)
+│   ├── sentence_structures.json (varied length patterns)
+│   ├── personal_voice_markers.json (I-statements, opinions, emotions)
+│   ├── specific_example_patterns.json (how to create real examples)
+│   └── expertise_signals.json (process details, common mistakes, insights)
+│
+├── fact_checking/ (METHODOLOGIES)
+│   ├── credible_sources.json (academic, reports, official docs ranked by credibility)
+│   ├── outdated_data_detection.json (how to spot old statistics)
+│   ├── hallucination_patterns.json (common false claims patterns)
+│   └── contradiction_resolution.json (how to handle conflicting data)
+│
+├── plagiarism_prevention/ (TECHNIQUES)
+│   ├── restructuring_patterns.json (how to rephrase without copying)
+│   ├── original_framing_examples.json (different angles on same topic)
+│   └── semantic_variation.json (vocabulary alternatives)
+│
+├── industry_knowledge/ (GENERAL TRENDS)
+│   ├── seo_guidelines.json (Google's latest ranking signals)
+│   ├── aeo_best_practices.json (AI extraction optimization)
+│   ├── tech_trends.json (emerging technologies, frameworks)
+│   └── marketing_trends.json (industry-wide patterns)
+│
+├── schema_patterns/ (REUSABLE TEMPLATES)
+│   ├── faq_schema.json (pattern for FAQ structure)
+│   ├── article_schema.json (pattern for Article schema)
+│   ├── organization_schema.json (company info patterns)
+│   └── breadcrumb_schema.json (navigation structure)
+│
+├── brand_voice_samples/ (REFERENCE LIBRARY)
+│   ├── formal_tone.md (examples of formal writing)
+│   ├── conversational_tone.md (examples of casual writing)
+│   ├── technical_tone.md (examples of complex explanations)
+│   └── emotional_tone.md (examples of persuasive writing)
+│
+└── keyword_research/ (SHARED KEYWORDS)
+    ├── trending_keywords.json (current high-volume keywords by industry)
+    ├── long_tail_patterns.json (long-tail keyword structures)
+    └── intent_categories.json (keyword intent classifications)
 ```
 
 ### Retrieval Strategy (Token Efficient)
 
+**Article 1 (New Topic):**
 ```
-When writing Article 2 on same topic as Article 1:
-  1. Load meta (brand voice) - 200 tokens
-  2. Load Article 1's research (avoid re-researching) - 400 tokens
-  3. Search for NEW sources only - 300 tokens
-  4. Merge + deduplicate - 100 tokens
+1. Load client brand meta (voice + positioning) - 150 tokens
+2. Load common KB humanization patterns - 100 tokens
+3. Load common KB fact-checking methodologies - 100 tokens
+4. Research new sources for topic - 400 tokens
+5. Store research in brand KB - (stored, don't hold in context)
+Total: ~750 tokens for first article
+```
 
-Result: Research phase uses 50% fewer tokens than Article 1
+**Article 2 (Different Topic, Same Brand):**
+```
+1. Load client brand meta (already in memory) - 0 tokens (cache)
+2. Load common KB patterns (already in memory) - 0 tokens (cache)
+3. Reuse 30% of general sources from brand KB - 50 tokens
+4. Research new sources for new topic - 300 tokens
+5. Store research in brand KB
+Total: ~350 tokens (53% savings vs Article 1)
 ```
 
-### Memory Decay (Optional)
+**Article 3 (Same Topic Family as Article 1):**
+```
+1. Meta + patterns (cached) - 0 tokens
+2. Reuse 70% of Article 1's research from brand KB - 200 tokens
+3. Research only NEW sources for angle - 100 tokens
+4. Store in brand KB
+Total: ~300 tokens (60% savings vs Article 1)
+```
 
+**Article 5+ (Leveraging Full Brand KB):**
 ```
-- Sources >6 months old for trending topics: Archive, verify freshness before use
-- Brand voice: Update if evolution detected
-- Expert knowledge: Keep (episodic, timestamped)
-- Successful patterns: Keep (reference for future)
+1. Meta + patterns (cached) - 0 tokens
+2. Reuse 80%+ of existing brand KB research - 100-150 tokens
+3. Research minimal new sources - 50 tokens
+4. Store in brand KB
+Total: ~150-200 tokens (75-80% savings vs Article 1)
 ```
+
+### Memory Management
+
+**Brand KB Maintenance:**
+```
+- Sources: Never delete (deduplicate on reuse)
+- Claims: Archive if contradicted by newer data
+- Statistics: Keep with dates (old data stays, new data tagged as latest)
+- Performance: Update after each article publish
+- Expertise: Accumulate (brand knowledge compounds)
+```
+
+**Common KB Maintenance:**
+```
+- Humanization patterns: Update quarterly (add new techniques)
+- Fact-checking: Update monthly (new sources emerge, old ones become unreliable)
+- Industry knowledge: Update monthly (trends change fast)
+- Brand voice samples: Update when new brand types added
+- Schema patterns: Update when Google releases new rich results
+```
+
+### Cross-Client Reuse
+
+**What stays brand-specific:**
+- Brand voice, positioning, target audience
+- Case studies, proprietary data, expertise
+- Keyword rankings and performance metrics
+
+**What can be shared across brands:**
+- Humanization techniques (apply to all)
+- Fact-checking methodologies (universal)
+- Plagiarism prevention logic (universal)
+- Schema patterns (same structure)
+- Industry trends (unless brand-specific)
+- General keyword research (adapt per brand)
 
 ---
 
