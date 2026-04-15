@@ -1,0 +1,125 @@
+{
+  "name": "seo-aeo-content-engine",
+  "version": "2.0.0",
+  "author": "KaushikSaurabh",
+  "description": "Cost-effective, self-contained SEO/AEO content generation system with brand-wide knowledge base, built-in humanization, fact-checking, and plagiarism prevention. No paid tools required.",
+  "category": "content-generation",
+  "tags": [
+    "seo",
+    "aeo",
+    "content-writing",
+    "humanization",
+    "fact-checking",
+    "plagiarism-prevention",
+    "knowledge-base",
+    "ai-content",
+    "blog-writing"
+  ],
+  "repository": "https://github.com/KaushikSaurabh/seo-aeo-content-engine",
+  "license": "MIT",
+  "keywords": [
+    "SEO optimization",
+    "AEO (AI Engine Optimization)",
+    "Content creation",
+    "Knowledge management",
+    "Token optimization",
+    "Multi-client management",
+    "Brand voice consistency",
+    "Source verification",
+    "AI detection avoidance",
+    "Plagiarism detection"
+  ],
+  "features": [
+    "7-phase content orchestration workflow",
+    "Brand-wide knowledge base (persistent across articles)",
+    "Common KB shared across all clients",
+    "Built-in humanization (no external tools)",
+    "Built-in plagiarism prevention (semantic scoring)",
+    "Built-in AI detection avoidance",
+    "Built-in fact-checking (logged sources)",
+    "Token optimization (53% savings by Article 5)",
+    "Phase 0 requirement gathering",
+    "Integration with existing SEO skills",
+    "Zero external tool dependencies",
+    "Cost-effective content generation"
+  ],
+  "phases": [
+    {
+      "name": "Phase 0",
+      "description": "Requirements Gathering - Collect website, keywords, articles, resources"
+    },
+    {
+      "name": "Phase 1",
+      "description": "Research & Knowledge Base Building - Gather sources, build brand KB"
+    },
+    {
+      "name": "Phase 2",
+      "description": "Article Planning & Structure - Create evidence-backed outline"
+    },
+    {
+      "name": "Phase 3",
+      "description": "Writing (Source-Grounded + Built-In Humanization)"
+    },
+    {
+      "name": "Phase 4",
+      "description": "Plagiarism Prevention - Semantic duplication scoring"
+    },
+    {
+      "name": "Phase 5",
+      "description": "Fact-Checking & Verification - Verify claims against sources"
+    },
+    {
+      "name": "Phase 6",
+      "description": "AEO Optimization - Make content extractable by AI"
+    },
+    {
+      "name": "Phase 7",
+      "description": "Quality Assurance & Finalization - Final checks before publishing"
+    }
+  ],
+  "usage": {
+    "invocation": "Write an article about [topic]",
+    "examples": [
+      "Write a blog post about AI personalization for e-commerce",
+      "Write 3 articles on [topic cluster] for [brand]",
+      "Score this content for plagiarism + humanization",
+      "Refresh this article for 2026"
+    ]
+  },
+  "capabilities": {
+    "content_generation": true,
+    "seo_optimization": true,
+    "aeo_optimization": true,
+    "knowledge_base_management": true,
+    "humanization": true,
+    "fact_checking": true,
+    "plagiarism_prevention": true,
+    "multi_client_support": true,
+    "token_optimization": true
+  },
+  "requirements": {
+    "external_tools": [],
+    "paid_services": [],
+    "apis": [
+      {
+        "name": "WebSearch",
+        "type": "built-in",
+        "required": true
+      }
+    ]
+  },
+  "documentation": {
+    "main": "SKILL.md",
+    "setup": "README.md",
+    "reference": "quick-checklist.md",
+    "architecture": "KB-ARCHITECTURE-v2.md"
+  },
+  "metrics": {
+    "plagiarism_target": "<20 (low risk)",
+    "ai_detection_target": "<15% (all detectors)",
+    "facts_verified": "100% before publication",
+    "source_traceability": "100% of claims attributed",
+    "token_savings_by_article_5": "77%",
+    "series_savings": "53%"
+  }
+}
