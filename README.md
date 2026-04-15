@@ -5,6 +5,7 @@
 ---
 
 ## What Changed in v2
+
 ✅ **Time-agnostic** - No time constraints (AI doesn't work on human hours)
 ✅ **Primary orchestrator** - Use for ALL content, not just complex articles
 ✅ **Zero external tools** - Plagiarism, AI detection, humanization all built-in
